@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Folder project</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="navbar navbar-light bg-light">
+            <a href="/" class="h1">Folder project</a>
+        </nav>
+        <hr>
+    </div>
+</header>
+<main>
+    <section>
+        <div class="container mt-5 mb-5">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+            <form action="/" method="post" class="form-signin">
+                <h1 class="h3 mb-3 font-weight-normal">Scan files in folder</h1>
+                <input type="text" name="folder" class="form-control" placeholder="Folder" required autofocus value="{% if folder %}{{ folder }}{% else %}/app/{% endif %}">
+                <button type="submit" class="btn btn-lg btn-primary mt-3" style="" type="submit">Send folder</button>
+            </form>
+        </div>
+    </section>
+    {% if folder and not error %}
+    <section class="container">
+        <div class="container mt-5 mb-5">
+            <h4>Files in folder '{{ folder }}':</h4>
+            <table class="table">
+                <tr>
+                    <th>File name</th>
+                    <th>Size (bytes)</th>
+                    <th>Last updated</th>
+                </tr>
+                {% for file in filesCollection %}
+                <tr>
+                    <td>{{ file.getName() }}</td>
+                    <td>{{ file.getSize()}}</td>
+                    <td>{{ file.getUpdated()|date("F d Y H:i:s.")}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="container mb-5">
+            <h4>Files in folder '{{ folder }}' from DB:</h4>
+            <table class="table">
+                <tr>
+                    <th>File name</th>
+                    <th>Size (bytes)</th>
+                    <th>Last updated</th>
+                </tr>
+                {% for file in filesCollectionFromDB %}
+                    <tr>
+                        <td>{{ file.getName() }}</td>
+                        <td>{{ file.getSize()}}</td>
+                        <td>{{ file.getUpdated()|date("F d Y H:i:s.")}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    {% endif %}
+    <br/>
+</main>
+<footer class="bg-light fixed-bottom text-center mt-5">
+    <div class="container">
+        <p class="text-center mt-3">&copy; {{ "now"|date("Y") }} Folder project. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
