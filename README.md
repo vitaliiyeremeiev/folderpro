@@ -1,3 +1,10 @@
+#install project
+make build
+make install
+
+#The site will be available on
+http://localhost/
+
 #Start docker
 make up
 
@@ -12,6 +19,3 @@ make down
 
 #Start tests
 make test
-
-#The site will be available on
-http://localhost/
